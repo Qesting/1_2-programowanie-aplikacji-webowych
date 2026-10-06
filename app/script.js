@@ -20,19 +20,34 @@
   })
 
   const draggable = document.getElementById('ex3_element')
-  draggable.addEventListener('dragstart', event => {
-    event.dataTransfer.setData('text/html', event.target.outerHTML)
-  })
-  draggable.addEventListener('dragend', event => {
-    event.target.remove()
-  })
 
-  const target = document.getElementById('ex3_two')
+  const target = document.getElementById('ex3_one')
+  const target2 = document.getElementById('ex3_two')
+
   target.addEventListener('dragover', event => {
     event.preventDefault()
   })
   target.addEventListener('drop', event => {
     event.preventDefault()
-    event.target.innerHTML = event.dataTransfer.getData('text/html')
+    const parent = draggable.parentElement
+    if (event.target === parent) {
+      console.log(event.target, parent)
+      return
+    }
+    parent.removeChild(draggable)
+    event.target.appendChild(draggable)
+  })
+
+  target2.addEventListener('dragover', event => {
+    event.preventDefault()
+  })
+  target2.addEventListener('drop', event => {
+    event.preventDefault()
+    const parent = draggable.parentElement
+    if (event.target === parent) {
+      return
+    }
+    parent.removeChild(draggable)
+    event.target.appendChild(draggable)
   })
 })();
